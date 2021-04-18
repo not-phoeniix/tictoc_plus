@@ -48,13 +48,13 @@ void draw_hour_marks_update_proc(Layer *layer, GContext *ctx) {
 
   graphics_context_set_fill_color(ctx, settings.hour_tick_color);
     
-  int dist_from_center = 20;
+  int dist_from_center = 65;
 
   for(int i = 0; i < 12; i++) {
 
     GPoint dot = {
-      .x = center.x + sin_lookup(TRIG_MAX_ANGLE / 12 * i) * dist_from_center,
-      .y = center.y - cos_lookup(TRIG_MAX_ANGLE / 12 * i) * dist_from_center
+      .x = center.x + sin_lookup(TRIG_MAX_ANGLE / 60 * i) * dist_from_center,
+      .y = center.y - cos_lookup(TRIG_MAX_ANGLE / 60 * i) * dist_from_centerb
     };
 
     graphics_fill_circle(ctx, dot, settings.hand_width / 2);

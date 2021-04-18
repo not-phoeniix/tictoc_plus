@@ -3,6 +3,8 @@
 #include "drawing/drawing.h"
 #include "config/cfg.h"
 
+//useful github for copying analog things: https://github.com/piggehperson/MotoMakerFace/blob/master/src/c/MotoMaker.c (thanks lavender!)
+
 Window *main_window;
 static Layer *clock_hands, *bg_layer;
 
@@ -18,6 +20,7 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 void update_stuff() {
   update_time();
   layer_mark_dirty(clock_hands);
+  layer_mark_dirty(bg_layer);
 }
 
 static void main_window_load(Window *window) {
@@ -28,13 +31,13 @@ static void main_window_load(Window *window) {
   
   update_time();
 
-  clock_hands = layer_create(bounds);
-  layer_set_update_proc(clock_hands, hands_draw_update_proc);
-  layer_add_child(window_layer, clock_hands);
-
   bg_layer = layer_create(bounds);
   layer_set_update_proc(bg_layer, draw_hour_marks_update_proc);
   layer_add_child(window_layer, bg_layer);
+
+  clock_hands = layer_create(bounds);
+  layer_set_update_proc(clock_hands, hands_draw_update_proc);
+  layer_add_child(window_layer, clock_hands);
 }
 
 static void main_window_unload() {
@@ -54,6 +57,7 @@ static void init() {
   });
 
   window_stack_push(main_window, true);
+
   update_stuff();
 }
 

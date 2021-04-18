@@ -8,8 +8,8 @@ static void default_settings() {
     settings.hand_width = 8;
     settings.hour_color = GColorRed;
     settings.min_color = GColorWhite;
-    settings.dot_color = GColorDarkGray;
-    settings.hour_tick_color = GColorWhite;
+    settings.dot_color = GColorWhite;
+    settings.hour_tick_color = GColorBlack;
 };
 
 void load_settings() {

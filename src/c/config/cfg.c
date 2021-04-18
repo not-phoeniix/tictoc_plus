@@ -11,7 +11,7 @@ static void default_settings() {
     settings.min_color = GColorWhite;
     settings.dot_color = GColorRed;
     settings.sec_color = GColorRed;
-    settings.hour_tick_color = GColorWhite;
+    settings.hour_tick_color = GColorDarkGray;
     settings.enable_seconds = true;
 };
 

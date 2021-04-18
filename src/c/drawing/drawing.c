@@ -4,7 +4,7 @@
 extern Window *main_window;
 extern ClaySettings settings;
 
-static int hour, min;
+static int hour, min, sec;
 
 void update_time() {
   time_t temp = time(NULL);
@@ -12,6 +12,7 @@ void update_time() {
 
   min = 360 * t->tm_min / 60;
   hour = 360 * (t->tm_hour % 12 + (1 - t->tm_min / 60)) / 12;
+  sec = 360 * t->tm_sec / 60;
 }
 
 static void draw_hand(int length, int width, int rot, GColor color, GContext *ctx) {
@@ -36,6 +37,10 @@ void hands_draw_update_proc(Layer *layer, GContext *ctx) {
 
   graphics_context_set_fill_color(ctx, settings.dot_color);
   graphics_fill_circle(ctx, GPoint(bounds.size.w / 2, bounds.size.h / 2), 4);
+}
+
+void draw_sec_update_proc(Layer *layer, GContext *ctx) {
+  draw_hand(55, settings.second_width, sec, settings.sec_color, ctx);
 }
 
 void draw_hour_marks_update_proc(Layer *layer, GContext *ctx) {

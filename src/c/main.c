@@ -6,21 +6,23 @@
 //useful github for copying analog things: https://github.com/piggehperson/MotoMakerFace/blob/master/src/c/MotoMaker.c (thanks lavender!)
 
 Window *main_window;
-static Layer *clock_hands, *bg_layer;
+static Layer *clock_hands, *sec_hand, *bg_layer;
 
 ClaySettings settings;
 
 static double two_pi = 2 * 3.1415926535;
-
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time();
   layer_mark_dirty(clock_hands);
+  layer_mark_dirty(sec_hand);
 }
 
 void update_stuff() {
   update_time();
   layer_mark_dirty(clock_hands);
   layer_mark_dirty(bg_layer);
+  layer_mark_dirty(sec_hand);
+  layer_set_hidden(sec_hand, !settings.enable_seconds);
 }
 
 static void main_window_load(Window *window) {
@@ -38,18 +40,30 @@ static void main_window_load(Window *window) {
   clock_hands = layer_create(bounds);
   layer_set_update_proc(clock_hands, hands_draw_update_proc);
   layer_add_child(window_layer, clock_hands);
+
+  sec_hand = layer_create(bounds);
+  layer_set_update_proc(sec_hand, draw_sec_update_proc);
+  layer_add_child(window_layer, sec_hand);
 }
 
 static void main_window_unload() {
   layer_destroy(clock_hands);
 }
 
+static void sub_to_time() {
+  if(!settings.enable_seconds) {
+    tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+  } else {
+    tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
+  }
+}
+
 static void init() {
   main_window = window_create();
 
-  tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
-
   load_settings();
+
+  tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
 
   window_set_window_handlers(main_window, (WindowHandlers) {
     .load = main_window_load,

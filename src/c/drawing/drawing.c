@@ -46,22 +46,18 @@ void draw_sec_update_proc(Layer *layer, GContext *ctx) {
 void draw_hour_marks_update_proc(Layer *layer, GContext *ctx) {
   GRect bounds = layer_get_bounds(window_get_root_layer(main_window));
   GPoint center = grect_center_point(&bounds);
-  
-  static int center_offset = 2;
 
-  graphics_context_set_fill_color(ctx, settings.dot_color);
+  graphics_context_set_fill_color(ctx, settings.hour_tick_color);
+    
+  int dist_from_center = 65;
 
-  for(int i = 0; i > 12; i++) {
-    GPoint bruh = {
-      .x = center.x + center_offset * sin_lookup(30*i),
-      .y = center.y - center_offset * cos_lookup(30*i)
+  for(int i = 0; i < 12; i++) {
+
+    GPoint dot = {
+      .x = center.x + sin_lookup(DEG_TO_TRIGANGLE(360 / 12 * i)) * dist_from_center,
+      .y = center.y + cos_lookup(DEG_TO_TRIGANGLE(360 / 12 * i)) * dist_from_center
     };
 
-    GPoint start = {
-      .x = center.x + sin_lookup(DEG_TO_TRIGANGLE(30*i)) * center_offset,
-      .y = center.y - cos_lookup(DEG_TO_TRIGANGLE(30*i)) * center_offset
-    };
-
-    graphics_fill_circle(ctx, bruh, 1);
+    graphics_fill_circle(ctx, dot, settings.hand_width / 2);
   }
 }

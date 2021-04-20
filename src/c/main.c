@@ -2,6 +2,7 @@
 #include "main.h"
 #include "drawing/drawing.h"
 #include "config/cfg.h"
+#include "messaging/msg.h"
 
 //useful github for copying analog things: https://github.com/piggehperson/MotoMakerFace/blob/master/src/c/MotoMaker.c (thanks lavender!)
 
@@ -10,26 +11,39 @@ static Layer *clock_hands, *sec_hand, *bg_layer;
 
 ClaySettings settings;
 
-static double two_pi = 2 * 3.1415926535;
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time();
   layer_mark_dirty(clock_hands);
   layer_mark_dirty(sec_hand);
 }
 
+static void sub_to_time() {
+  if(!settings.enable_seconds) {
+    tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+  } else {
+    tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
+  }
+}
+
 void update_stuff() {
   update_time();
+  sub_to_time();
+
+  window_set_background_color(main_window, settings.bg_color);
+
   layer_mark_dirty(clock_hands);
   layer_mark_dirty(bg_layer);
   layer_mark_dirty(sec_hand);
+
   layer_set_hidden(sec_hand, !settings.enable_seconds);
+  layer_set_hidden(bg_layer, !settings.enable_bg);
 }
 
 static void main_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
 
-  window_set_background_color(main_window, GColorBlack);
+  window_set_background_color(main_window, settings.bg_color);
   
   update_time();
 
@@ -50,17 +64,10 @@ static void main_window_unload() {
   layer_destroy(clock_hands);
 }
 
-static void sub_to_time() {
-  if(!settings.enable_seconds) {
-    tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
-  } else {
-    tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
-  }
-}
-
 static void init() {
   main_window = window_create();
 
+  init_msg();
   load_settings();
 
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);

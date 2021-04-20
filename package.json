@@ -2,9 +2,13 @@
   "name": "TicToc+",
   "author": "Nicki",
   "version": "1.0.0",
-  "keywords": ["pebble-app"],
+  "keywords": [
+    "pebble-app"
+  ],
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "pebble-clay": "^1.0.4"
+  },
   "pebble": {
     "displayName": "TicToc+",
     "uuid": "0bcee2c3-a857-40ea-a0fb-7efd2dcc0125",
@@ -20,7 +24,19 @@
       "watchface": true
     },
     "messageKeys": [
-      "dummy"
+      "HandWidthKey",
+      "SecondWidthKey",
+      "HourColorKey",
+      "MinColorKey",
+      "DotColorKey",
+      "SecColorKey",
+      "TickColorKey",
+      "SecBoolKey",
+      "BgColorKey",
+      "BgBoolKey",
+      "DotNumKey",
+      "HourTickSizeKey",
+      "DotTypeKey"
     ],
     "resources": {
       "media": []

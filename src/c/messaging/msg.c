@@ -90,6 +90,11 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
         settings.date_color = GColorFromHEX(date_color_t->value->int32);
     }
 
+    Tuple *bg_color_t = dict_find(iter, MESSAGE_KEY_BgColorKey);
+    if(bg_color_t) {
+        settings.bg_color = GColorFromHEX(bg_color_t->value->int32);
+    }
+
     save_settings();
     update_stuff();
 }

@@ -142,7 +142,7 @@ void draw_hour_marks_update_proc(Layer *layer, GContext *ctx) {
   } else if (settings.dot_type == 2) {
     draw_dot_bg(ctx);
   } else {
-    draw_line_bg(ctx, 70);
+    draw_line_bg(ctx, PBL_IF_ROUND_ELSE(80, 70));
   }
 }
 
@@ -166,5 +166,5 @@ void date_update_proc(Layer *layer, GContext *ctx) {
   GRect bounds = layer_get_bounds(window_get_root_layer(main_window));
 
   graphics_context_set_text_color(ctx, settings.date_color);
-  graphics_draw_text(ctx, date_char, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD), GRect(bounds.size.w - 55, bounds.size.h / 2 - 12, 50, 20), GTextOverflowModeTrailingEllipsis, GTextAlignmentCenter, 0);
+  graphics_draw_text(ctx, date_char, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD), GRect(bounds.size.w - PBL_IF_ROUND_ELSE(70, 55), bounds.size.h / 2 - 12, 50, 20), GTextOverflowModeTrailingEllipsis, GTextAlignmentCenter, 0);
 }

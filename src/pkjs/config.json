@@ -122,42 +122,56 @@
             },
             {
                 "type": "color",
+                "includeGray": "true",
                 "defaultValue": "0xFFFFFF",
                 "messageKey": "HourColorKey",
                 "label": "Hour Hand Color"
             },
             {
                 "type": "color",
+                "includeGray": "true",
                 "defaultValue": "0xFFFFFF",
                 "messageKey": "MinColorKey",
                 "label": "Minute Hand Color"
             },
             {
                 "type": "color",
+                "includeGray": "true",
                 "defaultValue": "0xFF0000",
                 "messageKey": "DotColorKey",
                 "label": "Center Dot Color"
             },
             {
                 "type": "color",
+                "includeGray": "true",
                 "defaultValue": "0xFF0000",
                 "messageKey": "SecColorKey",
                 "label": "Second Hand Color"
             },
             {
                 "type": "color",
+                "includeGray": "true",
                 "defaultValue": "0xFF0000",
                 "messageKey": "DateColorKey",
                 "label": "Date Color"
             },
             {
                 "type": "color",
+                "includeGray": "true",
                 "defaultValue": "0xFFFFFF",
                 "messageKey": "TickColorKey",
                 "label": "Hour Tick Color"
             },
             {
                 "type": "color",
+                "includeGray": "true",
+                "defaultValue": "0x000000",
+                "messageKey": "BgColorKey",
+                "label": "Background Color"
+            },
+            {
+                "type": "color",
+                "includeGray": "true",
                 "defaultValue": "0xFFFFFF",
                 "messageKey": "PebbleColorKey",
                 "label": "Pebble Logo Color"
@@ -167,6 +181,7 @@
                 "defaultValue": "0",
                 "messageKey": "FlagKey",
                 "label": "Pride Flag on Minute Hand",
+                "capabilities": ["COLOR"],
                 "options": [
                     {
                         "value": "0",

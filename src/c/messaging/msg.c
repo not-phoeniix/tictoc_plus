@@ -70,6 +70,26 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
         settings.flag = atoi(flag_t->value->cstring);
     }
 
+    Tuple *pebble_t = dict_find(iter, MESSAGE_KEY_PebbleBoolKey);
+    if(pebble_t) {
+        settings.enable_pebble = pebble_t->value->int32 == 1;
+    }
+
+    Tuple *pebble_color_t = dict_find(iter, MESSAGE_KEY_PebbleColorKey);
+    if(pebble_color_t) {
+        settings.pebble_color = GColorFromHEX(pebble_color_t->value->int32);
+    }
+
+    Tuple *date_enable_t = dict_find(iter, MESSAGE_KEY_DateBoolKey);
+    if(date_enable_t) {
+        settings.enable_date = date_enable_t->value->int32 == 1;
+    }
+
+    Tuple *date_color_t = dict_find(iter, MESSAGE_KEY_DateColorKey);
+    if(date_color_t) {
+        settings.date_color = GColorFromHEX(date_color_t->value->int32);
+    }
+
     save_settings();
     update_stuff();
 }

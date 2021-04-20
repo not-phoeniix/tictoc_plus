@@ -37,7 +37,11 @@
       "DotNumKey",
       "HourTickSizeKey",
       "DotTypeKey",
-      "FlagKey"
+      "FlagKey",
+      "PebbleBoolKey",
+      "PebbleColorKey",
+      "DateBoolKey",
+      "DateColorKey"
     ],
     "resources": {
       "media": []

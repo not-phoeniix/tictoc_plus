@@ -5,9 +5,15 @@
 #include "messaging/msg.h"
 
 Window *main_window;
-static Layer *clock_hands, *sec_hand, *bg_layer, *gay_layer;
+static Layer *clock_hands, *sec_hand, *bg_layer, *gay_layer, *pebb_layer, *date_layer;
 
 ClaySettings settings;
+
+static void bluetooth_callback(bool connected) {
+    if(settings.do_bt_buzz == true && !connected) {
+        vibes_short_pulse();
+    }
+}
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time();
@@ -32,6 +38,9 @@ void update_stuff() {
   layer_mark_dirty(clock_hands);
   layer_mark_dirty(bg_layer);
   layer_mark_dirty(sec_hand);
+  layer_mark_dirty(gay_layer);
+  layer_mark_dirty(pebb_layer);
+  layer_mark_dirty(date_layer);
 
   layer_set_hidden(sec_hand, !settings.enable_seconds);
   layer_set_hidden(bg_layer, !settings.enable_bg);
@@ -40,6 +49,8 @@ void update_stuff() {
   } else {
     layer_set_hidden(gay_layer, false);
   }
+  layer_set_hidden(pebb_layer, !settings.enable_pebble);
+  layer_set_hidden(date_layer, !settings.enable_date);
 }
 
 static void main_window_load(Window *window) {
@@ -53,6 +64,14 @@ static void main_window_load(Window *window) {
   bg_layer = layer_create(bounds);
   layer_set_update_proc(bg_layer, draw_hour_marks_update_proc);
   layer_add_child(window_layer, bg_layer);
+
+  pebb_layer = layer_create(bounds);
+  layer_set_update_proc(pebb_layer, pebble_text_update_proc);
+  layer_add_child(window_layer, pebb_layer);
+
+  date_layer = layer_create(bounds);
+  layer_set_update_proc(date_layer, date_update_proc);
+  layer_add_child(window_layer, date_layer);
 
   clock_hands = layer_create(bounds);
   layer_set_update_proc(clock_hands, hands_draw_update_proc);
@@ -77,6 +96,10 @@ static void init() {
   init_msg();
   load_settings();
 
+  connection_service_subscribe((ConnectionHandlers) {
+    .pebble_app_connection_handler = bluetooth_callback
+  });
+
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
 
   window_set_window_handlers(main_window, (WindowHandlers) {
@@ -85,6 +108,8 @@ static void init() {
   });
 
   window_stack_push(main_window, true);
+
+  bluetooth_callback(connection_service_peek_pebble_app_connection());
 
   update_stuff();
 }

@@ -6,6 +6,7 @@ extern ClaySettings settings;
 #include <math.h>
 
 static int hour, min, sec;
+static char date_char[] = "DD";
 
 extern int *flag_colors[];
 extern int num_stripes[];
@@ -13,6 +14,8 @@ extern int num_stripes[];
 void update_time() {
   time_t temp = time(NULL);
   struct tm *t = localtime(&temp);
+
+  strftime(date_char, sizeof(date_char), "%d", t);
 
   min = 360 * t->tm_min / 60;
   hour = 360 * (t->tm_hour % 12 * 6 + t->tm_min / 10) / (12 * 6);
@@ -150,4 +153,18 @@ void draw_gay_hand_update_proc(Layer *layer, GContext *ctx) {
 
   graphics_context_set_fill_color(ctx, settings.dot_color);
   graphics_fill_circle(ctx, GPoint(bounds.size.w / 2, bounds.size.h / 2), 4);
+}
+
+void pebble_text_update_proc(Layer *layer, GContext *ctx) {
+  GRect bounds = layer_get_bounds(window_get_root_layer(main_window));
+
+  graphics_context_set_text_color(ctx, settings.pebble_color);
+  graphics_draw_text(ctx, "pebble", fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GRect(0, 40, bounds.size.w, 50), GTextOverflowModeTrailingEllipsis, GTextAlignmentCenter, 0);
+}
+
+void date_update_proc(Layer *layer, GContext *ctx) {
+  GRect bounds = layer_get_bounds(window_get_root_layer(main_window));
+
+  graphics_context_set_text_color(ctx, settings.date_color);
+  graphics_draw_text(ctx, date_char, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD), GRect(bounds.size.w - 55, bounds.size.h / 2 - 12, 50, 20), GTextOverflowModeTrailingEllipsis, GTextAlignmentCenter, 0);
 }

@@ -6,12 +6,17 @@ typedef struct ClaySettings {
     int hour_tick_size;
     bool enable_seconds;
     bool enable_bg;
+    bool enable_pebble;
+    bool enable_date;
+    bool do_bt_buzz;
     GColor hour_color;
     GColor min_color;
     GColor dot_color;
     GColor sec_color;
     GColor hour_tick_color;
     GColor bg_color;
+    GColor pebble_color;
+    GColor date_color;
     int num_of_dots;
     int dot_type;
     int flag;

@@ -28,9 +28,21 @@
             },
             {
                 "type": "toggle",
+                "defaultValue": "true",
+                "label": "Enable Date",
+                "messageKey": "DateBoolKey"
+            },
+            {
+                "type": "toggle",
                 "messageKey": "BgBoolKey",
                 "defaultValue": "true",
                 "label": "Enable Hour Ticks"
+            },
+            {
+                "type": "toggle",
+                "messageKey": "PebbleBoolKey",
+                "defaultValue": "true",
+                "label": "Enable Pebble Logo Text"
             },
             {
                 "type": "slider",
@@ -134,9 +146,21 @@
             },
             {
                 "type": "color",
-                "defaultValue": "0x555555",
+                "defaultValue": "0xFF0000",
+                "messageKey": "DateColorKey",
+                "label": "Date Color"
+            },
+            {
+                "type": "color",
+                "defaultValue": "0xFFFFFF",
                 "messageKey": "TickColorKey",
-                "label": "Hour Dots Color"
+                "label": "Hour Tick Color"
+            },
+            {
+                "type": "color",
+                "defaultValue": "0xFFFFFF",
+                "messageKey": "PebbleColorKey",
+                "label": "Pebble Logo Color"
             },
             {
                 "type": "select",
@@ -146,7 +170,7 @@
                 "options": [
                     {
                         "value": "0",
-                        "label": "None (use minute hand color)"
+                        "label": "None"
                     },
                     {
                         "value": "1",

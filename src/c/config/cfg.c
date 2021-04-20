@@ -11,7 +11,7 @@ static void default_settings() {
     settings.min_color = GColorWhite;
     settings.dot_color = GColorRed;
     settings.sec_color = GColorRed;
-    settings.hour_tick_color = GColorDarkGray;
+    settings.hour_tick_color = GColorWhite;
     settings.enable_seconds = true;
     settings.bg_color = GColorBlack;
     settings.enable_bg = true;
@@ -19,6 +19,11 @@ static void default_settings() {
     settings.hour_tick_size = 3;
     settings.dot_type = 2;
     settings.flag = 0;
+    settings.pebble_color = GColorWhite;
+    settings.enable_pebble = true;
+    settings.date_color = GColorRed;
+    settings.enable_date = true;
+    settings.do_bt_buzz = true;
 };
 
 void load_settings() {

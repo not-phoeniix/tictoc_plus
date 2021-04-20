@@ -36,7 +36,8 @@
       "BgBoolKey",
       "DotNumKey",
       "HourTickSizeKey",
-      "DotTypeKey"
+      "DotTypeKey",
+      "FlagKey"
     ],
     "resources": {
       "media": []

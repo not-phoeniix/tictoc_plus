@@ -65,6 +65,11 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
         settings.dot_type = atoi(dot_type_t->value->cstring);
     }
 
+    Tuple *flag_t = dict_find(iter, MESSAGE_KEY_FlagKey);
+    if(flag_t) {
+        settings.flag = atoi(flag_t->value->cstring);
+    }
+
     save_settings();
     update_stuff();
 }

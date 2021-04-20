@@ -137,6 +137,46 @@
                 "defaultValue": "0x555555",
                 "messageKey": "TickColorKey",
                 "label": "Hour Dots Color"
+            },
+            {
+                "type": "select",
+                "defaultValue": "0",
+                "messageKey": "FlagKey",
+                "label": "Pride Flag on Minute Hand",
+                "options": [
+                    {
+                        "value": "0",
+                        "label": "None (use minute hand color)"
+                    },
+                    {
+                        "value": "1",
+                        "label": "Pride"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Transgender"
+                    },
+                    {
+                        "value": "3",
+                        "label": "Bisexual"
+                    },
+                    {
+                        "value": "4",
+                        "label": "Lesbian"
+                    },
+                    {
+                        "value": "5",
+                        "label": "Pansexual"
+                    },
+                    {
+                        "value": "6",
+                        "label": "Asexual"
+                    },
+                    {
+                        "value": "7",
+                        "label": "Nonbinary"
+                    }
+                ]
             }
         ]
     },

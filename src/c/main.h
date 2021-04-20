@@ -1,7 +1,6 @@
 #pragma once
 
 typedef struct ClaySettings {
-    int flag_number;
     int hand_width;
     int second_width;
     int hour_tick_size;
@@ -15,6 +14,7 @@ typedef struct ClaySettings {
     GColor bg_color;
     int num_of_dots;
     int dot_type;
+    int flag;
 } ClaySettings;
 
 void update_stuff();

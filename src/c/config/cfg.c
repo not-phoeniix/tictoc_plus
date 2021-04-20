@@ -18,6 +18,7 @@ static void default_settings() {
     settings.num_of_dots = 12;
     settings.hour_tick_size = 3;
     settings.dot_type = 2;
+    settings.flag = 0;
 };
 
 void load_settings() {

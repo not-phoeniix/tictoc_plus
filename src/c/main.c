@@ -4,10 +4,8 @@
 #include "config/cfg.h"
 #include "messaging/msg.h"
 
-//useful github for copying analog things: https://github.com/piggehperson/MotoMakerFace/blob/master/src/c/MotoMaker.c (thanks lavender!)
-
 Window *main_window;
-static Layer *clock_hands, *sec_hand, *bg_layer;
+static Layer *clock_hands, *sec_hand, *bg_layer, *gay_layer;
 
 ClaySettings settings;
 
@@ -37,6 +35,11 @@ void update_stuff() {
 
   layer_set_hidden(sec_hand, !settings.enable_seconds);
   layer_set_hidden(bg_layer, !settings.enable_bg);
+  if(settings.flag == 0) {
+    layer_set_hidden(gay_layer, true);
+  } else {
+    layer_set_hidden(gay_layer, false);
+  }
 }
 
 static void main_window_load(Window *window) {
@@ -54,6 +57,10 @@ static void main_window_load(Window *window) {
   clock_hands = layer_create(bounds);
   layer_set_update_proc(clock_hands, hands_draw_update_proc);
   layer_add_child(window_layer, clock_hands);
+
+  gay_layer = layer_create(bounds);
+  layer_set_update_proc(gay_layer, draw_gay_hand_update_proc);
+  layer_add_child(window_layer, gay_layer);
 
   sec_hand = layer_create(bounds);
   layer_set_update_proc(sec_hand, draw_sec_update_proc);

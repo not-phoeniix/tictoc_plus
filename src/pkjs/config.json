@@ -45,6 +45,12 @@
                 "label": "Enable Pebble Logo Text"
             },
             {
+                "type": "toggle",
+                "messageKey": "BtBuzzKey",
+                "defaultValue": "true",
+                "label": "Buzz on Disconnect"
+            },
+            {
                 "type": "slider",
                 "messageKey": "HandWidthKey",
                 "defaultValue": "4",

@@ -95,6 +95,11 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
         settings.bg_color = GColorFromHEX(bg_color_t->value->int32);
     }
 
+    Tuple *bt_buzz_t = dict_find(iter, MESSAGE_KEY_BtBuzzKey);
+    if(bt_buzz_t) {
+        settings.do_bt_buzz = bt_buzz_t->value->int32 == 1;
+    }
+
     save_settings();
     update_stuff();
 }

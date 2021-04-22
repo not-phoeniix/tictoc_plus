@@ -1,8 +1,9 @@
 {
   "name": "TicToc+",
   "author": "Nicki",
-  "version": "1.0.0",
+  "version": "1.0",
   "keywords": [
+    "pebble-watchface",
     "pebble-app"
   ],
   "private": true,

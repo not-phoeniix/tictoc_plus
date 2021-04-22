@@ -7,6 +7,8 @@
 Window *main_window;
 static Layer *clock_hands, *sec_hand, *bg_layer, *gay_layer, *pebb_layer, *date_layer;
 
+bool s_screen_is_obstructed;
+
 ClaySettings settings;
 
 static void bluetooth_callback(bool connected) {
@@ -55,7 +57,7 @@ void update_stuff() {
 
 static void main_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_unobstructed_bounds(window_layer);
+  GRect bounds = layer_get_bounds(window_layer);
 
   window_set_background_color(main_window, settings.bg_color);
   
@@ -115,8 +117,9 @@ static void init() {
 }
 
 static void deinit() {
-  window_destroy(main_window);
   tick_timer_service_unsubscribe();
+  unobstructed_area_service_unsubscribe();
+  window_destroy(main_window);
 }
 
 int main(void) {

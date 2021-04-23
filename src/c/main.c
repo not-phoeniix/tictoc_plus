@@ -7,7 +7,7 @@
 Window *main_window;
 static Layer *clock_hands, *sec_hand, *bg_layer, *gay_layer, *pebb_layer, *date_layer;
 
-bool s_screen_is_obstructed;
+extern int actual_hour;
 
 ClaySettings settings;
 
@@ -23,8 +23,8 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   layer_mark_dirty(sec_hand);
 }
 
-static void sub_to_time() {
-  if(!settings.enable_seconds) {
+static void sub_to_time(bool sec_true) {
+  if(!sec_true) {
     tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
   } else {
     tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
@@ -33,7 +33,6 @@ static void sub_to_time() {
 
 void update_stuff() {
   update_time();
-  sub_to_time();
 
   window_set_background_color(main_window, settings.bg_color);
 
@@ -44,7 +43,14 @@ void update_stuff() {
   layer_mark_dirty(pebb_layer);
   layer_mark_dirty(date_layer);
 
-  layer_set_hidden(sec_hand, !settings.enable_seconds);
+  if(settings.sec_end == settings.sec_start) {
+    layer_set_hidden(sec_hand, true);
+    sub_to_time(false);
+  } else if(settings.sec_start <= actual_hour && actual_hour <= settings.sec_end) {
+    layer_set_hidden(sec_hand, false);
+    sub_to_time(true);
+  }
+
   layer_set_hidden(bg_layer, !settings.enable_bg);
   if(settings.flag == 0) {
     layer_set_hidden(gay_layer, true);
@@ -103,6 +109,8 @@ static void init() {
   });
 
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
+
+  sub_to_time(false);
 
   window_set_window_handlers(main_window, (WindowHandlers) {
     .load = main_window_load,

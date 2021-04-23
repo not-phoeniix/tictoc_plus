@@ -5,7 +5,7 @@ extern Window *main_window;
 extern ClaySettings settings;
 #include <math.h>
 
-static int hour, min, sec;
+int hour, min, sec, actual_hour;
 static char date_char[] = "DD";
 
 extern int *flag_colors[];
@@ -24,6 +24,8 @@ void update_time() {
   struct tm *t = localtime(&temp);
 
   strftime(date_char, sizeof(date_char), "%d", t);
+
+  actual_hour = t->tm_hour;
 
   min = 360 * t->tm_min / 60;
   hour = 360 * (t->tm_hour % 12 * 6 + t->tm_min / 10) / (12 * 6);

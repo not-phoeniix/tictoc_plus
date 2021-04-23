@@ -21,11 +21,6 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
         settings.enable_bg = bg_t->value->int32 == 1;
     }
 
-    Tuple *sec_t = dict_find(iter, MESSAGE_KEY_SecBoolKey);
-    if (sec_t) {
-        settings.enable_seconds = sec_t->value->int32 == 1;
-    }
-
     Tuple *dotNum_t = dict_find(iter, MESSAGE_KEY_DotNumKey);
     if (dotNum_t) {
         settings.num_of_dots = atoi(dotNum_t->value->cstring);
@@ -98,6 +93,16 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
     Tuple *bt_buzz_t = dict_find(iter, MESSAGE_KEY_BtBuzzKey);
     if(bt_buzz_t) {
         settings.do_bt_buzz = bt_buzz_t->value->int32 == 1;
+    }
+
+    Tuple *sec_start_t = dict_find(iter, MESSAGE_KEY_SecStartKey);
+    if(sec_start_t) {
+        settings.sec_start = sec_start_t->value->int32;
+    }
+
+    Tuple *sec_end_t = dict_find(iter, MESSAGE_KEY_SecEndKey);
+    if(sec_end_t) {
+        settings.sec_end = sec_end_t->value->int32;
     }
 
     save_settings();

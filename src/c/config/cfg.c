@@ -12,7 +12,6 @@ static void default_settings() {
     settings.dot_color = GColorRed;
     settings.sec_color = GColorRed;
     settings.hour_tick_color = GColorWhite;
-    settings.enable_seconds = true;
     settings.bg_color = GColorBlack;
     settings.enable_bg = true;
     settings.num_of_dots = 12;
@@ -24,6 +23,8 @@ static void default_settings() {
     settings.date_color = GColorRed;
     settings.enable_date = true;
     settings.do_bt_buzz = true;
+    settings.sec_start = 0;
+    settings.sec_end = 24;
 };
 
 void load_settings() {

@@ -4,7 +4,6 @@ typedef struct ClaySettings {
     int hand_width;
     int second_width;
     int hour_tick_size;
-    bool enable_seconds;
     bool enable_bg;
     bool enable_pebble;
     bool enable_date;
@@ -20,6 +19,8 @@ typedef struct ClaySettings {
     int num_of_dots;
     int dot_type;
     int flag;
+    int sec_start;
+    int sec_end;
 } ClaySettings;
 
 void update_stuff();

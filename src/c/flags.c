@@ -1,5 +1,6 @@
 #include <pebble.h>
 
+// hex code array collection of the pride flag hand options:
 int clear[] = {0x000000};
 int pride[] = {0xAA00AA, 0x0000FF, 0x00FF00, 0xFFFF00, 0xFF5500, 0xFF0000};
 int trans[] = {0x00AAFF, 0xFF55FF, 0xFFFFFF, 0xFF55FF, 0x00AAFF};

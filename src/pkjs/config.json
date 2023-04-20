@@ -28,9 +28,9 @@
             },
             {
                 "type": "toggle",
-                "messageKey": "BgBoolKey",
+                "messageKey": "EnableSecondHandKey",
                 "defaultValue": "true",
-                "label": "Enable Hour Ticks"
+                "label": "Enable second hand (uses more battery)"
             },
             {
                 "type": "toggle",
@@ -62,19 +62,45 @@
                 "type": "select",
                 "messageKey": "DotTypeKey",
                 "defaultValue": "2",
+                "capabilities": "NOT_ROUND",
                 "label": "Style of Hour Ticks",
                 "options": [
                     {
                         "label": "Dots",
-                        "value": "2"
+                        "value": "0"
                     },
                     {
                         "label": "Lines",
-                        "value": "3"
+                        "value": "1"
                     },
                     {
-                        "label": "Short Lines",
+                        "label": "Long Lines",
+                        "value": "2"
+                    },
+                    {
+                        "label": "None",
+                        "value": "3"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "messageKey": "DotTypeKey",
+                "defaultValue": "2",
+                "label": "Style of Hour Ticks",
+                "capabilities": "ROUND",
+                "options": [
+                    {
+                        "label": "Dots",
+                        "value": "0"
+                    },
+                    {
+                        "label": "Lines",
                         "value": "1"
+                    },
+                    {
+                        "label": "None",
+                        "value": "3"
                     }
                 ]
             }
@@ -99,17 +125,8 @@
             },
             {
                 "type": "slider",
-                "messageKey": "SecondWidthKey",
-                "defaultValue": "2",
-                "label": "Second Hand Size",
-                "min": "2",
-                "max": "8",
-                "step": "1"
-            },
-            {
-                "type": "slider",
                 "messageKey": "HourTickSizeKey",
-                "defaultValue": "2",
+                "defaultValue": "3",
                 "label": "Hour Tick Size",
                 "min": "1",
                 "max": "4",
@@ -117,23 +134,12 @@
             },
             {
                 "type": "slider",
-                "messageKey": "SecStartKey",
-                "defaultValue": "0",
-                "label": "Second Hand Start Hour",
-                "min": "0",
-                "max": "24",
-                "step": "1",
-                "description": "(set to same time to disable)"
-            },
-            {
-                "type": "slider",
-                "messageKey": "SecEndKey",
-                "defaultValue": "24",
-                "label": "Second Hand End Hour",
-                "min": "0",
-                "max": "24",
-                "step": "1",
-                "description": "(set to same time to disable)"
+                "messageKey": "SecondWidthKey",
+                "defaultValue": "2",
+                "label": "Second Hand Size",
+                "min": "2",
+                "max": "8",
+                "step": "1"
             }
         ]
     },
@@ -144,6 +150,13 @@
                 "type": "heading",
                 "defaultValue": "Colors",
                 "size": "7"
+            },
+            {
+                "type": "color",
+                "includeGray": "true",
+                "defaultValue": "0x000000",
+                "messageKey": "BgColorKey",
+                "label": "Background Color"
             },
             {
                 "type": "color",
@@ -163,13 +176,6 @@
                 "type": "color",
                 "includeGray": "true",
                 "defaultValue": "0xFF0000",
-                "messageKey": "DotColorKey",
-                "label": "Center Dot Color"
-            },
-            {
-                "type": "color",
-                "includeGray": "true",
-                "defaultValue": "0xFF0000",
                 "messageKey": "SecColorKey",
                 "label": "Second Hand Color"
             },
@@ -177,8 +183,8 @@
                 "type": "color",
                 "includeGray": "true",
                 "defaultValue": "0xFF0000",
-                "messageKey": "DateColorKey",
-                "label": "Date Color"
+                "messageKey": "DotColorKey",
+                "label": "Center Dot Color"
             },
             {
                 "type": "color",
@@ -190,9 +196,9 @@
             {
                 "type": "color",
                 "includeGray": "true",
-                "defaultValue": "0x000000",
-                "messageKey": "BgColorKey",
-                "label": "Background Color"
+                "defaultValue": "0xFF0000",
+                "messageKey": "DateColorKey",
+                "label": "Date Color"
             },
             {
                 "type": "color",

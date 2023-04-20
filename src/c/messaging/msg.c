@@ -3,8 +3,7 @@
 #include "../main.h"
 #include "../config/cfg.h"
 
-extern ClaySettings settings;
-
+// creates tuples with values of message keys from settings and assigns to setting vars
 static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
     Tuple *hWidth_t = dict_find(iter, MESSAGE_KEY_HandWidthKey);
     if (hWidth_t) {
@@ -14,11 +13,6 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
     Tuple *sWidth_t = dict_find(iter, MESSAGE_KEY_SecondWidthKey);
     if (sWidth_t) {
         settings.second_width = sWidth_t->value->int32;
-    }
-
-    Tuple *bg_t = dict_find(iter, MESSAGE_KEY_BgBoolKey);
-    if (bg_t) {
-        settings.enable_bg = bg_t->value->int32 == 1;
     }
 
     Tuple *dotNum_t = dict_find(iter, MESSAGE_KEY_DotNumKey);
@@ -55,54 +49,50 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
     if (dot_size_t) {
         settings.hour_tick_size = dot_size_t->value->int32;
     }
+
     Tuple *dot_type_t = dict_find(iter, MESSAGE_KEY_DotTypeKey);
     if (dot_type_t) {
-        settings.dot_type = atoi(dot_type_t->value->cstring);
+        settings.hour_tick_type = atoi(dot_type_t->value->cstring);
     }
 
     Tuple *flag_t = dict_find(iter, MESSAGE_KEY_FlagKey);
-    if(flag_t) {
+    if (flag_t) {
         settings.flag = atoi(flag_t->value->cstring);
     }
 
     Tuple *pebble_t = dict_find(iter, MESSAGE_KEY_PebbleBoolKey);
-    if(pebble_t) {
-        settings.enable_pebble = pebble_t->value->int32 == 1;
+    if (pebble_t) {
+        settings.enable_pebble_logo = pebble_t->value->int32 == 1;
     }
 
     Tuple *pebble_color_t = dict_find(iter, MESSAGE_KEY_PebbleColorKey);
-    if(pebble_color_t) {
+    if (pebble_color_t) {
         settings.pebble_color = GColorFromHEX(pebble_color_t->value->int32);
     }
 
     Tuple *date_enable_t = dict_find(iter, MESSAGE_KEY_DateBoolKey);
-    if(date_enable_t) {
+    if (date_enable_t) {
         settings.enable_date = date_enable_t->value->int32 == 1;
     }
 
     Tuple *date_color_t = dict_find(iter, MESSAGE_KEY_DateColorKey);
-    if(date_color_t) {
+    if (date_color_t) {
         settings.date_color = GColorFromHEX(date_color_t->value->int32);
     }
 
     Tuple *bg_color_t = dict_find(iter, MESSAGE_KEY_BgColorKey);
-    if(bg_color_t) {
+    if (bg_color_t) {
         settings.bg_color = GColorFromHEX(bg_color_t->value->int32);
     }
 
     Tuple *bt_buzz_t = dict_find(iter, MESSAGE_KEY_BtBuzzKey);
-    if(bt_buzz_t) {
-        settings.do_bt_buzz = bt_buzz_t->value->int32 == 1;
+    if (bt_buzz_t) {
+        settings.enable_bt_buzz = bt_buzz_t->value->int32 == 1;
     }
 
-    Tuple *sec_start_t = dict_find(iter, MESSAGE_KEY_SecStartKey);
-    if(sec_start_t) {
-        settings.sec_start = sec_start_t->value->int32;
-    }
-
-    Tuple *sec_end_t = dict_find(iter, MESSAGE_KEY_SecEndKey);
-    if(sec_end_t) {
-        settings.sec_end = sec_end_t->value->int32;
+    Tuple *enable_sec_hand_t = dict_find(iter, MESSAGE_KEY_EnableSecondHandKey);
+    if (enable_sec_hand_t) {
+        settings.enable_seconds_hand = enable_sec_hand_t->value->int32 == 1;
     }
 
     save_settings();
@@ -111,5 +101,9 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
 
 void init_msg() {
     app_message_register_inbox_received(inbox_recieved_handler);
-    app_message_open(256, 256);
+    
+    // calculates buffer size depending on the amount of tuples up there ^
+    uint32_t buffer_size = dict_calc_buffer_size(18);
+
+    app_message_open(buffer_size, buffer_size);
 }

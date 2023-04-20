@@ -4,134 +4,137 @@
 #include "config/cfg.h"
 #include "messaging/msg.h"
 
-Window *main_window;
-static Layer *clock_hands, *sec_hand, *bg_layer, *gay_layer, *pebb_layer, *date_layer;
+// handlers/services ================================================
 
-extern int actual_hour;
-
-ClaySettings settings;
-
+// handles buzzing w/ bluetooth status disconnect
 static void bluetooth_callback(bool connected) {
-    if(settings.do_bt_buzz == true && !connected) {
+    if (settings.enable_bt_buzz == true && !connected) {
         vibes_short_pulse();
     }
 }
 
+// handles changing/updating of time
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
-  update_time();
-  layer_mark_dirty(clock_hands);
-  layer_mark_dirty(sec_hand);
+    update_time();
+    layer_mark_dirty(hands_layer);
+    layer_mark_dirty(sec_hand_layer);
 }
 
-static void sub_to_time(bool sec_true) {
-  if(!sec_true) {
-    tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
-  } else {
-    tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
-  }
+// subscribes to the timer service
+static void timer_service_change(bool use_seconds) {
+    tick_timer_service_unsubscribe();
+
+    if (!use_seconds) {
+        tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+    } else {
+        tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
+    }
 }
 
+// universal update function ========================================
+
+/// @brief Redraws all layers and toggles visiblity depending on config
 void update_stuff() {
-  update_time();
+    update_time();
 
-  window_set_background_color(main_window, settings.bg_color);
+    window_set_background_color(main_window, settings.bg_color);
 
-  layer_mark_dirty(clock_hands);
-  layer_mark_dirty(bg_layer);
-  layer_mark_dirty(sec_hand);
-  layer_mark_dirty(gay_layer);
-  layer_mark_dirty(pebb_layer);
-  layer_mark_dirty(date_layer);
+    layer_mark_dirty(hands_layer);
+    layer_mark_dirty(hour_tick_layer);
+    layer_mark_dirty(sec_hand_layer);
+    layer_mark_dirty(gay_layer);
+    layer_mark_dirty(pebb_layer);
+    layer_mark_dirty(date_layer);
 
-  if(settings.sec_end == settings.sec_start) {
-    layer_set_hidden(sec_hand, true);
-    sub_to_time(false);
-  } else if(settings.sec_start <= actual_hour && actual_hour <= settings.sec_end) {
-    layer_set_hidden(sec_hand, false);
-    sub_to_time(true);
-  }
+    layer_set_hidden(sec_hand_layer, !settings.enable_seconds_hand);
+    timer_service_change(settings.enable_seconds_hand);
 
-  layer_set_hidden(bg_layer, !settings.enable_bg);
-  if(settings.flag == 0) {
-    layer_set_hidden(gay_layer, true);
-  } else {
-    layer_set_hidden(gay_layer, false);
-  }
-  layer_set_hidden(pebb_layer, !settings.enable_pebble);
-  layer_set_hidden(date_layer, !settings.enable_date);
+    layer_set_hidden(gay_layer, settings.flag == 0);
+    layer_set_hidden(pebb_layer, !settings.enable_pebble_logo);
+    layer_set_hidden(date_layer, !settings.enable_date);
 }
+
+// window load and unload ===========================================
 
 static void main_window_load(Window *window) {
-  Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_bounds(window_layer);
+    Layer *window_layer = window_get_root_layer(window);
+    GRect bounds = layer_get_bounds(window_layer);
 
-  window_set_background_color(main_window, settings.bg_color);
-  
-  update_time();
+    window_set_background_color(main_window, settings.bg_color);
 
-  bg_layer = layer_create(bounds);
-  layer_set_update_proc(bg_layer, draw_hour_marks_update_proc);
-  layer_add_child(window_layer, bg_layer);
+    update_time();
 
-  pebb_layer = layer_create(bounds);
-  layer_set_update_proc(pebb_layer, pebble_text_update_proc);
-  layer_add_child(window_layer, pebb_layer);
+    hour_tick_layer = layer_create(bounds);
+    layer_set_update_proc(hour_tick_layer, draw_hour_marks_update_proc);
+    layer_add_child(window_layer, hour_tick_layer);
 
-  date_layer = layer_create(bounds);
-  layer_set_update_proc(date_layer, date_update_proc);
-  layer_add_child(window_layer, date_layer);
+    pebb_layer = layer_create(bounds);
+    layer_set_update_proc(pebb_layer, pebble_text_update_proc);
+    layer_add_child(window_layer, pebb_layer);
 
-  clock_hands = layer_create(bounds);
-  layer_set_update_proc(clock_hands, hands_draw_update_proc);
-  layer_add_child(window_layer, clock_hands);
+    date_layer = layer_create(bounds);
+    layer_set_update_proc(date_layer, date_update_proc);
+    layer_add_child(window_layer, date_layer);
 
-  gay_layer = layer_create(bounds);
-  layer_set_update_proc(gay_layer, draw_gay_hand_update_proc);
-  layer_add_child(window_layer, gay_layer);
+    hands_layer = layer_create(bounds);
+    layer_set_update_proc(hands_layer, hands_draw_update_proc);
+    layer_add_child(window_layer, hands_layer);
 
-  sec_hand = layer_create(bounds);
-  layer_set_update_proc(sec_hand, draw_sec_update_proc);
-  layer_add_child(window_layer, sec_hand);
+    gay_layer = layer_create(bounds);
+    layer_set_update_proc(gay_layer, draw_gay_hand_update_proc);
+    layer_add_child(window_layer, gay_layer);
+
+    sec_hand_layer = layer_create(bounds);
+    layer_set_update_proc(sec_hand_layer, draw_sec_update_proc);
+    layer_add_child(window_layer, sec_hand_layer);
+    
+    update_stuff();
 }
 
 static void main_window_unload() {
-  layer_destroy(clock_hands);
+    layer_destroy(hour_tick_layer);
+    layer_destroy(pebb_layer);
+    layer_destroy(date_layer);
+    layer_destroy(date_layer);
+    layer_destroy(gay_layer);
+    layer_destroy(sec_hand_layer);
 }
 
+// init and deinit ==================================================
+
 static void init() {
-  main_window = window_create();
+    main_window = window_create();
 
-  init_msg();
-  load_settings();
+    // subscribing to watch services
+    timer_service_change(false);
+    connection_service_subscribe((ConnectionHandlers){
+        .pebble_app_connection_handler = bluetooth_callback
+    });
 
-  connection_service_subscribe((ConnectionHandlers) {
-    .pebble_app_connection_handler = bluetooth_callback
-  });
+    // setting window load & unload functions
+    window_set_window_handlers(main_window, (WindowHandlers){
+        .load = main_window_load,
+        .unload = main_window_unload
+    });
 
-  tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
+    init_msg();
+    load_settings();
 
-  sub_to_time(false);
+    window_stack_push(main_window, true);
 
-  window_set_window_handlers(main_window, (WindowHandlers) {
-    .load = main_window_load,
-    .unload = main_window_unload
-  });
-
-  window_stack_push(main_window, true);
-
-  bluetooth_callback(connection_service_peek_pebble_app_connection());
-
-  update_stuff();
+    bluetooth_callback(connection_service_peek_pebble_app_connection());
 }
 
 static void deinit() {
-  tick_timer_service_unsubscribe();
-  unobstructed_area_service_unsubscribe();
-  window_destroy(main_window);
+    tick_timer_service_unsubscribe();
+    connection_service_unsubscribe();
+    window_destroy(main_window);
 }
 
+// main =============================================================
+
 int main(void) {
-  init();
-  app_event_loop();
-  deinit();
+    init();
+    app_event_loop();
+    deinit();
 }

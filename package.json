@@ -1,60 +1,59 @@
 {
-  "name": "TicToc+",
-  "author": "Nikki",
-  "version": "1.3",
-  "keywords": [
-    "pebble-watchface",
-    "pebble-app"
-  ],
-  "private": true,
-  "dependencies": {
-    "pebble-clay": "^1.0.4"
-  },
-  "pebble": {
-    "displayName": "TicToc+",
-    "uuid": "0bcee2c3-a857-40ea-a0fb-7efd2dcc0125",
-    "sdkVersion": "3",
-    "enableMultiJS": true,
-    "targetPlatforms": [
-      "aplite",
-      "basalt",
-      "chalk",
-      "diorite"
+    "name": "TicToc+",
+    "author": "Nikki",
+    "version": "1.3",
+    "keywords": [
+        "pebble-watchface",
+        "pebble-app"
     ],
-    "watchapp": {
-      "watchface": true
+    "private": true,
+    "dependencies": {
+        "pebble-clay": "^1.0.4"
     },
-    "messageKeys": [
-      "HandWidthKey",
-      "SecondWidthKey",
-      "HourColorKey",
-      "MinColorKey",
-      "DotColorKey",
-      "SecColorKey",
-      "TickColorKey",
-      "BgColorKey",
-      "BgBoolKey",
-      "DotNumKey",
-      "HourTickSizeKey",
-      "DotTypeKey",
-      "FlagKey",
-      "PebbleBoolKey",
-      "PebbleColorKey",
-      "DateBoolKey",
-      "DateColorKey",
-      "BtBuzzKey",
-      "SecStartKey",
-      "SecEndKey"
-    ],
-    "resources": {
-      "media": [
-        {
-          "menuIcon": "true",
-          "type": "png",
-          "name": "MENU_ICON",
-          "file": "tictocplus.png"
+    "pebble": {
+        "displayName": "TicToc+",
+        "uuid": "0bcee2c3-a857-40ea-a0fb-7efd2dcc0125",
+        "sdkVersion": "3",
+        "enableMultiJS": true,
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk",
+            "diorite"
+        ],
+        "watchapp": {
+            "watchface": true
+        },
+        "messageKeys": [
+            "HandWidthKey",
+            "SecondWidthKey",
+            "HourColorKey",
+            "MinColorKey",
+            "DotColorKey",
+            "SecColorKey",
+            "TickColorKey",
+            "BgColorKey",
+            "BgBoolKey",
+            "DotNumKey",
+            "HourTickSizeKey",
+            "DotTypeKey",
+            "FlagKey",
+            "PebbleBoolKey",
+            "PebbleColorKey",
+            "DateBoolKey",
+            "DateColorKey",
+            "BtBuzzKey",
+            "EnableSecondHandKey"
+        ],
+        "resources": {
+            "media": [
+                {
+                    "menuIcon": "true",
+                    "type": "png",
+                    "name": "MENU_ICON",
+                    "file": "tictocplus.png"
+                }
+            ]
         }
-      ]
     }
-  }
 }

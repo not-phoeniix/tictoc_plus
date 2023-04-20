@@ -1,26 +1,47 @@
 #pragma once
 
+#include <pebble.h>
+
+#define PBL_IS_ROUND PBL_IF_ROUND_ELSE(true, false)
+#define PBL_IS_COLOR PBL_IF_COLOR_ELSE(true, false)
+
+// different types of hour marks
+enum hour_tick_type {
+    DOT,
+    LINES,
+    LONG_LINES,
+    NONE
+} hour_tick_type;
+
 typedef struct ClaySettings {
     int hand_width;
     int second_width;
     int hour_tick_size;
-    bool enable_bg;
-    bool enable_pebble;
+    int num_of_dots;
+    int flag;
+    enum hour_tick_type hour_tick_type;
+    bool enable_seconds_hand;
     bool enable_date;
-    bool do_bt_buzz;
+    bool enable_pebble_logo;
+    bool enable_bt_buzz;
+    GColor bg_color;
     GColor hour_color;
     GColor min_color;
-    GColor dot_color;
     GColor sec_color;
+    GColor dot_color;
     GColor hour_tick_color;
-    GColor bg_color;
-    GColor pebble_color;
     GColor date_color;
-    int num_of_dots;
-    int dot_type;
-    int flag;
-    int sec_start;
-    int sec_end;
+    GColor pebble_color;
 } ClaySettings;
+
+// creating all the layer/window object stuff for the program
+Window *main_window;
+Layer *hands_layer;
+Layer *sec_hand_layer;
+Layer *hour_tick_layer;
+Layer *gay_layer;
+Layer *pebb_layer;
+Layer *date_layer;
+ClaySettings settings;
 
 void update_stuff();

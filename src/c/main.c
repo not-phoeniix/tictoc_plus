@@ -95,7 +95,7 @@ static void main_window_unload() {
     layer_destroy(hour_tick_layer);
     layer_destroy(pebb_layer);
     layer_destroy(date_layer);
-    layer_destroy(date_layer);
+    layer_destroy(hands_layer);
     layer_destroy(gay_layer);
     layer_destroy(sec_hand_layer);
 }

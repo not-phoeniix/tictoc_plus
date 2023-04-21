@@ -179,7 +179,6 @@ void draw_hour_marks_update_proc(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_unobstructed_bounds(window_get_root_layer(main_window));
     GPoint center = grect_center_point(&bounds);
 
-
     // switch that controls which hour mark type to draw
     switch (settings.hour_tick_type) {
         // dot bg

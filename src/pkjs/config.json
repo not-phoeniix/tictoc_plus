@@ -61,8 +61,8 @@
             {
                 "type": "select",
                 "messageKey": "DotTypeKey",
-                "defaultValue": "2",
-                "capabilities": "NOT_ROUND",
+                "defaultValue": "0",
+                "capabilities": ["NOT_ROUND"],
                 "label": "Style of Hour Ticks",
                 "options": [
                     {
@@ -86,9 +86,9 @@
             {
                 "type": "select",
                 "messageKey": "DotTypeKey",
-                "defaultValue": "2",
+                "defaultValue": "0",
                 "label": "Style of Hour Ticks",
-                "capabilities": "ROUND",
+                "capabilities": ["ROUND"],
                 "options": [
                     {
                         "label": "Dots",
@@ -96,7 +96,7 @@
                     },
                     {
                         "label": "Lines",
-                        "value": "1"
+                        "value": "2"
                     },
                     {
                         "label": "None",

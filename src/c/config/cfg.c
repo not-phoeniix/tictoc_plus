@@ -9,10 +9,12 @@ static void set_defaults() {
     settings.second_width = 2;
     settings.hour_tick_size = 3;
     settings.num_of_dots = 12;
-    settings.flag = 0;
+    settings.flag = 1;
     // enums
     settings.hour_tick_type = DOT;
     // booleans
+    settings.enable_pride_bg = false;
+    settings.enable_pride_hand = false;
     settings.enable_seconds_hand = true;
     settings.enable_date = true;
     settings.enable_pebble_logo = true;

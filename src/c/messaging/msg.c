@@ -95,6 +95,16 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
         settings.enable_seconds_hand = enable_sec_hand_t->value->int32 == 1;
     }
 
+    Tuple *enable_pride_bg_t = dict_find(iter, MESSAGE_KEY_EnablePrideBgKey);
+    if(enable_pride_bg_t) {
+        settings.enable_pride_bg = enable_pride_bg_t->value->int32 == 1;
+    }
+
+    Tuple *enable_pride_hand_t = dict_find(iter, MESSAGE_KEY_EnablePrideHandKey);
+    if(enable_pride_hand_t) {
+        settings.enable_pride_hand = enable_pride_hand_t->value->int32 == 1;
+    }
+
     save_settings();
     update_stuff();
 }
@@ -103,7 +113,7 @@ void init_msg() {
     app_message_register_inbox_received(inbox_recieved_handler);
     
     // calculates buffer size depending on the amount of tuples up there ^
-    uint32_t buffer_size = dict_calc_buffer_size(18);
+    uint32_t buffer_size = dict_calc_buffer_size(20);
 
     app_message_open(buffer_size, buffer_size);
 }

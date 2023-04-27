@@ -19,7 +19,10 @@ typedef struct ClaySettings {
     int hour_tick_size;
     int num_of_dots;
     int flag;
+    int rot_flag;
     enum hour_tick_type hour_tick_type;
+    bool enable_pride_bg;
+    bool enable_pride_hand;
     bool enable_seconds_hand;
     bool enable_date;
     bool enable_pebble_logo;
@@ -36,10 +39,11 @@ typedef struct ClaySettings {
 
 // creating all the layer/window object stuff for the program
 Window *main_window;
+Layer *pride_bg_layer;
 Layer *hands_layer;
 Layer *sec_hand_layer;
 Layer *hour_tick_layer;
-Layer *gay_layer;
+Layer *pride_hand_layer;
 Layer *pebb_layer;
 Layer *date_layer;
 ClaySettings settings;

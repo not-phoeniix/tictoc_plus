@@ -148,7 +148,7 @@ void hands_draw_update_proc(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_unobstructed_bounds(window_get_root_layer(main_window));
     
     // makes min color the color of the background when the pride hand is enabled
-    GColor min_hand_color = settings.flag == 0 ? settings.min_color : settings.bg_color;
+    GColor min_hand_color = settings.enable_pride_hand ? settings.bg_color : settings.min_color;
 
     // length of hands depending on quickview
     int m_length = if_quickview_else(40, 55);
@@ -226,7 +226,7 @@ void draw_hour_marks_update_proc(Layer *layer, GContext *ctx) {
 /// @brief Update procedure for drawing the pride minute hand
 /// @param layer Layer to draw on
 /// @param ctx Graphics context to draw with
-void draw_gay_hand_update_proc(Layer *layer, GContext *ctx) {
+void draw_pride_hand_update_proc(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_unobstructed_bounds(window_get_root_layer(main_window));
 
     // draws the hand itself

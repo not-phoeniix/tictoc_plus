@@ -3,6 +3,7 @@
 #include "drawing/drawing.h"
 #include "config/cfg.h"
 #include "messaging/msg.h"
+#include "drawing/pride.h"
 
 // handlers/services ================================================
 
@@ -39,17 +40,19 @@ void update_stuff() {
 
     window_set_background_color(main_window, settings.bg_color);
 
+    // marks layers as dirty, queueing to redraw
+    layer_mark_dirty(pride_bg_layer);
     layer_mark_dirty(hands_layer);
     layer_mark_dirty(hour_tick_layer);
     layer_mark_dirty(sec_hand_layer);
-    layer_mark_dirty(gay_layer);
+    layer_mark_dirty(pride_hand_layer);
     layer_mark_dirty(pebb_layer);
     layer_mark_dirty(date_layer);
 
-    layer_set_hidden(sec_hand_layer, !settings.enable_seconds_hand);
     timer_service_change(settings.enable_seconds_hand);
-
-    layer_set_hidden(gay_layer, settings.flag == 0);
+    layer_set_hidden(pride_bg_layer, !settings.enable_pride_bg);
+    layer_set_hidden(pride_hand_layer, !settings.enable_pride_hand);
+    layer_set_hidden(sec_hand_layer, !settings.enable_seconds_hand);
     layer_set_hidden(pebb_layer, !settings.enable_pebble_logo);
     layer_set_hidden(date_layer, !settings.enable_date);
 }
@@ -63,6 +66,10 @@ static void main_window_load(Window *window) {
     window_set_background_color(main_window, settings.bg_color);
 
     update_time();
+    
+    pride_bg_layer = layer_create(bounds);
+    layer_set_update_proc(pride_bg_layer, pride_update_proc);
+    layer_add_child(window_layer, pride_bg_layer);
 
     hour_tick_layer = layer_create(bounds);
     layer_set_update_proc(hour_tick_layer, draw_hour_marks_update_proc);
@@ -80,9 +87,9 @@ static void main_window_load(Window *window) {
     layer_set_update_proc(hands_layer, hands_draw_update_proc);
     layer_add_child(window_layer, hands_layer);
 
-    gay_layer = layer_create(bounds);
-    layer_set_update_proc(gay_layer, draw_gay_hand_update_proc);
-    layer_add_child(window_layer, gay_layer);
+    pride_hand_layer = layer_create(bounds);
+    layer_set_update_proc(pride_hand_layer, draw_pride_hand_update_proc);
+    layer_add_child(window_layer, pride_hand_layer);
 
     sec_hand_layer = layer_create(bounds);
     layer_set_update_proc(sec_hand_layer, draw_sec_update_proc);
@@ -96,7 +103,7 @@ static void main_window_unload() {
     layer_destroy(pebb_layer);
     layer_destroy(date_layer);
     layer_destroy(hands_layer);
-    layer_destroy(gay_layer);
+    layer_destroy(pride_hand_layer);
     layer_destroy(sec_hand_layer);
 }
 

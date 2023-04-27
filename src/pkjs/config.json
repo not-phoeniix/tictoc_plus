@@ -22,27 +22,27 @@
             },
             {
                 "type": "toggle",
-                "defaultValue": "true",
-                "label": "Enable Date",
+                "defaultValue": true,
+                "label": "Enable date",
                 "messageKey": "DateBoolKey"
             },
             {
                 "type": "toggle",
-                "messageKey": "EnableSecondHandKey",
-                "defaultValue": "true",
-                "label": "Enable second hand (uses more battery)"
+                "messageKey": "PebbleBoolKey",
+                "defaultValue": true,
+                "label": "Enable Pebble logo text"
             },
             {
                 "type": "toggle",
-                "messageKey": "PebbleBoolKey",
-                "defaultValue": "true",
-                "label": "Enable Pebble Logo Text"
+                "messageKey": "EnableSecondHandKey",
+                "defaultValue": true,
+                "label": "Enable second hand (uses more battery)"
             },
             {
                 "type": "select",
                 "messageKey": "DotNumKey",
                 "defaultValue": "12",
-                "label": "Number of Hour Ticks",
+                "label": "Number of hour ticks",
                 "options": [
                     {
                         "label": "1",
@@ -63,7 +63,7 @@
                 "messageKey": "DotTypeKey",
                 "defaultValue": "0",
                 "capabilities": ["NOT_ROUND"],
-                "label": "Style of Hour Ticks",
+                "label": "Style of hour ticks",
                 "options": [
                     {
                         "label": "Dots",
@@ -74,7 +74,7 @@
                         "value": "1"
                     },
                     {
-                        "label": "Long Lines",
+                        "label": "Long lines",
                         "value": "2"
                     },
                     {
@@ -87,7 +87,7 @@
                 "type": "select",
                 "messageKey": "DotTypeKey",
                 "defaultValue": "0",
-                "label": "Style of Hour Ticks",
+                "label": "Style of hour ticks",
                 "capabilities": ["ROUND"],
                 "options": [
                     {
@@ -118,7 +118,7 @@
                 "type": "slider",
                 "messageKey": "HandWidthKey",
                 "defaultValue": "4",
-                "label": "Hour and Minute Hand Size",
+                "label": "Hour and minute hand size",
                 "min": "2",
                 "max": "8",
                 "step": "1"
@@ -127,7 +127,7 @@
                 "type": "slider",
                 "messageKey": "HourTickSizeKey",
                 "defaultValue": "3",
-                "label": "Hour Tick Size",
+                "label": "Hour tick size",
                 "min": "1",
                 "max": "4",
                 "step": "1"
@@ -136,7 +136,7 @@
                 "type": "slider",
                 "messageKey": "SecondWidthKey",
                 "defaultValue": "2",
-                "label": "Second Hand Size",
+                "label": "Second hand size",
                 "min": "2",
                 "max": "8",
                 "step": "1"
@@ -156,56 +156,56 @@
                 "includeGray": "true",
                 "defaultValue": "0x000000",
                 "messageKey": "BgColorKey",
-                "label": "Background Color"
+                "label": "Background color"
             },
             {
                 "type": "color",
                 "includeGray": "true",
                 "defaultValue": "0xFFFFFF",
                 "messageKey": "HourColorKey",
-                "label": "Hour Hand Color"
+                "label": "Hour hand color"
             },
             {
                 "type": "color",
                 "includeGray": "true",
                 "defaultValue": "0xFFFFFF",
                 "messageKey": "MinColorKey",
-                "label": "Minute Hand Color"
+                "label": "Minute hand color"
             },
             {
                 "type": "color",
                 "includeGray": "true",
                 "defaultValue": "0xFF0000",
                 "messageKey": "SecColorKey",
-                "label": "Second Hand Color"
+                "label": "Second hand color"
             },
             {
                 "type": "color",
                 "includeGray": "true",
                 "defaultValue": "0xFF0000",
                 "messageKey": "DotColorKey",
-                "label": "Center Dot Color"
-            },
-            {
-                "type": "color",
-                "includeGray": "true",
-                "defaultValue": "0xFFFFFF",
-                "messageKey": "TickColorKey",
-                "label": "Hour Tick Color"
+                "label": "Center dot color"
             },
             {
                 "type": "color",
                 "includeGray": "true",
                 "defaultValue": "0xFF0000",
                 "messageKey": "DateColorKey",
-                "label": "Date Color"
+                "label": "Date color"
+            },
+            {
+                "type": "color",
+                "includeGray": "true",
+                "defaultValue": "0xFFFFFF",
+                "messageKey": "TickColorKey",
+                "label": "Hour tick color"
             },
             {
                 "type": "color",
                 "includeGray": "true",
                 "defaultValue": "0xFFFFFF",
                 "messageKey": "PebbleColorKey",
-                "label": "Pebble Logo Color"
+                "label": "Pebble logo color"
             }
         ]
     },
@@ -220,21 +220,31 @@
             {
                 "type": "toggle",
                 "messageKey": "BtBuzzKey",
-                "defaultValue": "true",
-                "label": "Buzz on Disconnect"
+                "defaultValue": true,
+                "label": "Buzz on disconnect"
+            },
+            {
+                "type": "toggle",
+                "capabilities": ["COLOR"],
+                "messageKey": "EnablePrideBgKey",
+                "defaultValue": false,
+                "label": "Enable pride background"
+            },
+            {
+                "type": "toggle",
+                "capabilities": ["COLOR"],
+                "messageKey": "EnablePrideHandKey",
+                "defaultValue": false,
+                "label": "Enable pride flag minute hand",
+                "description": "(experimental)"
             },
             {
                 "type": "select",
-                "defaultValue": "0",
+                "defaultValue": "1",
                 "messageKey": "FlagKey",
-                "label": "Pride Flag on Minute Hand",
+                "label": "Pride flag",
                 "capabilities": ["COLOR"],
-                "description": "(experimental)",
                 "options": [
-                    {
-                        "value": "0",
-                        "label": "None"
-                    },
                     {
                         "value": "1",
                         "label": "Pride"
